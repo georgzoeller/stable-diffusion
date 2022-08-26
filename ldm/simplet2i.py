@@ -155,10 +155,25 @@ The vast majority of these arguments default to reasonable values.
             self.seed = seed
 
     @torch.no_grad()
-    def txt2img(self,prompt,outdir=None,batch_size=None,iterations=None,
-                steps=None,seed=None,grid=None,individual=None,width=None,height=None,
-                cfg_scale=None,ddim_eta=None,strength=None,embedding_path=None,init_img=None,
-                skip_normalize=False,variants=None):    # note the "variants" option is an unused hack caused by how options are passed
+    def txt2img(
+        self,
+        prompt,
+        outdir=None,
+        batch_size=None,
+        iterations=None,
+        steps=None,
+        seed=None,
+        grid=None,
+        individual=None,
+        width=None,
+        height=None,
+        cfg_scale=None,
+        ddim_eta=None,
+        strength=None,
+        embedding_path=None,
+        init_img=None,
+        skip_normalize=False,
+    ):
         """
         Generate an image from the prompt, writing iteration images into the outdir
         The output is a list of lists in the format: [[filename1,seed1], [filename2,seed2],...]
@@ -172,7 +187,7 @@ The vast majority of these arguments default to reasonable values.
         ddim_eta   = ddim_eta   or self.ddim_eta
         batch_size = batch_size or self.batch_size
         iterations = iterations or self.iterations
-        strength   = strength   or self.strength     # not actually used here, but preserved for code refactoring
+        strength   = strength   or self.strength    # not actually used here, but preserved for code refactoring
         embedding_path = embedding_path or self.embedding_path
 
         model = self.load_model()  # will instantiate the model or return it from cache
@@ -271,9 +286,6 @@ The vast majority of these arguments default to reasonable values.
                                                 batch_size=batch_size,
                                                 iterations=iterations,
                                                 outdir=outdir)
-        except KeyboardInterrupt:
-            print('*interrupted*')
-            print('Partial results will be returned; if --grid was requested, nothing will be returned.')
         except RuntimeError as e:
             print(str(e))
 
@@ -284,10 +296,25 @@ The vast majority of these arguments default to reasonable values.
         
     # There is lots of shared code between this and txt2img and should be refactored.
     @torch.no_grad()
-    def img2img(self,prompt,outdir=None,init_img=None,batch_size=None,iterations=None,
-                steps=None,seed=None,grid=None,individual=None,width=None,height=None,
-                cfg_scale=None,ddim_eta=None,strength=None,embedding_path=None,
-                skip_normalize=False,variants=None):   # note the "variants" option is an unused hack caused by how options are passed
+    def img2img(
+        self,
+        prompt,
+        outdir=None,
+        init_img=None,
+        batch_size=None,
+        iterations=None,
+        steps=None,
+        seed=None,
+        grid=None,
+        individual=None,
+        width=None,
+        height=None,
+        cfg_scale=None,
+        ddim_eta=None,
+        strength=None,
+        embedding_path=None,
+        skip_normalize=False,
+    ):
         """
         Generate an image from the prompt and the initial image, writing iteration images into the outdir
         The output is a list of lists in the format: [[filename1,seed1], [filename2,seed2],...]
